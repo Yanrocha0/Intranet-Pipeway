@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pipeway Engenharia - Comunicação Interna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="comunicacao.css" />
+</head>
+<body>
+
+  <video autoplay muted loop class="video-bg">
+    <source src="pipeway.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo de fundo.
+  </video>
+  <div class="video-mask"></div>
+
+  <div class="header">
+    <div class="branding">
+      <h1>PIPEWAY</h1>
+      <div class="subtitle">Comunicação Interna - Intranet Corporativa</div>
+    </div>
+    
+    <div class="counter">
+      <i class="fas fa-users"></i>
+      <span id="visitor-count">1245</span> Visitantes
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Tela de Login (para TI e SMAS) -->
+    <div id="login-screen" class="login-container">
+      <h2 class="login-title"><i class="fas fa-shield-alt"></i> Acesso Restrito</h2>
+      <p style="text-align: center; color: #aaffaa; margin-bottom: 30px;">
+        Esta área é restrita aos técnicos de TI e SMAS. Faça login para publicar comunicados.
+      </p>
+      
+      <div id="error-message" class="error-message">
+        <i class="fas fa-exclamation-triangle"></i> Email ou senha incorretos. Tente novamente.
+      </div>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" required placeholder="seu.email@pipeway.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" class="form-control" required placeholder="Digite sua senha">
+        </div>
+        
+        <div class="form-group">
+          <label for="departamento">Departamento</label>
+          <select id="departamento" class="form-control" required>
+            <option value="">Selecione o departamento</option>
+            <option value="ti">Tecnologia da Informação (TI)</option>
+            <option value="smas">SMAS (Segurança e Meio Ambiente)</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn-login">
+          <i class="fas fa-sign-in-alt"></i> Entrar
+        </button>
+      </form>
+    </div>
+
+    <!-- Portal de Comunicação Interna -->
+    <div id="comunicacao-screen" class="comunicacao-container hidden">
+      <div class="user-info">
+        <h2 class="comunicacao-title"><i class="fas fa-bullhorn"></i> Portal de Comunicação Interna</h2>
+        <p>Bem-vindo, <strong id="user-name"></strong>! <span id="user-role"></span></p>
+        <div style="margin-top: 15px;">
+          <button class="btn-logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Sair
+          </button>
+          <button class="btn-logout" onclick="window.location.href='home.html'">
+            <i class="fas fa-arrow-left"></i> Voltar
+          </button>
+        </div>
+      </div>
+
+      <!-- Painel de Administração (para TI e SMAS) -->
+      <div id="admin-panel" class="admin-panel hidden">
+        <h3><i class="fas fa-plus-circle"></i> Novo Comunicado</h3>
+        
+        <div id="success-message" class="success-message">
+          <i class="fas fa-check-circle"></i> Comunicado publicado com sucesso!
+        </div>
+        
+        <form id="comunicadoForm">
+          <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="conteudo">Conteúdo</label>
+            <textarea id="conteudo" class="form-control" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="prioridade">Prioridade</label>
+            <select id="prioridade" class="form-control" required>
+              <option value="normal">Normal</option>
+              <option value="importante">Importante</option>
+              <option value="urgente">Urgente</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="tipo-comunicado">Tipo de Comunicado</label>
+            <select id="tipo-comunicado" class="form-control" required>
+              <option value="ti">Comunicado de TI</option>
+              <option value="smas">Comunicado de SMAS</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-paper-plane"></i> Publicar Comunicado
+          </button>
+        </form>
+      </div>
+
+      <!-- Mural de Avisos -->
+      <h3 style="color: #aaffaa; margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-clipboard-list"></i> Mural de Avisos</h3>
+      
+      <!-- Filtros -->
+      <div class="filtros-container">
+        <label for="filtro-departamento">Filtrar por:</label>
+        <select id="filtro-departamento" onchange="filtrarComunicados()">
+          <option value="todos">Todos os departamentos</option>
+          <option value="ti">Apenas TI</option>
+          <option value="smas">Apenas SMAS</option>
+        </select>
+        
+        <select id="filtro-prioridade" onchange="filtrarComunicados()">
+          <option value="todos">Todas as prioridades</option>
+          <option value="normal">Normal</option>
+          <option value="importante">Importante</option>
+          <option value="urgente">Urgente</option>
+        </select>
+      </div>
+      
+      <div id="mural-avisos" class="comunicacao-grid">
+        <!-- Comunicados serão carregados aqui -->
+      </div>
+
+      <!-- Agenda Corporativa -->
+      <div class="agenda-container">
+        <h3 style="color: #aaffaa; margin-bottom: 15px;"><i class="fas fa-calendar-alt"></i> Agenda Corporativa</h3>
+        <ul id="agenda-list" class="agenda-list">
+          <!-- Eventos da agenda serão carregados aqui -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer buttons -->
+  <div class="footer-buttons">
+    <button onclick="window.open('http://10.10.10.5/tel/', '_blank')">
+      <i class="fas fa-phone"></i> Lista Telefônica
+    </button>
+    <button onclick="window.open('suporteTI.html', '_blank')">
+      <i class="fas fa-headset"></i> Suporte TI
+    </button>
+    <button onclick="window.open('http://10.10.10.105/pcp2110/web/login#/pcp_apontamentosdeproducoes?usuario=8498ff13-9f7b-42e1-bff0-9589ae20af14&modofiltro=OR')">
+      <i class="fas fa-user-tie"></i> PCP NASAJON
+    </button>
+    <button onclick="window.open('http://10.10.10.5/pw', '_blank')">
+      <i class="fas fa-key"></i> Minha PW
+    </button>
+    <button onclick="window.open('contato.html', '_blank')">
+      <i class="fas fa-envelope"></i> Fale Conosco
+    </button>
+    <button onclick="window.open('recursos_humanos.html', '_blank')">
+      <i class="fas fa-user-tie"></i> Recursos Humanos
+    </button>
+    <button onclick="window.open('comunicacao.html', '_blank')">
+      <i class="fas fa-bullhorn"></i> Comunicação
+    </button>
+  </div>
+<script>
+  // Lista de usuários SMAS
+  const users = [
+    { email: 'rafael.muniz@pipeway.com', password: 'p7NIkCkg', name: 'Rafael Muniz', role: 'smas', departamento: 'smas' },
+    { email: 'ana.lucia@pipeway.com', password: 'p7NIkCkg', name: 'Ana Lúcia', role: 'smas', departamento: 'smas' },
+    { email: 'fabiano.dias@pipeway.com', password: 'p7NIkCkg', name: 'Fabiano Dias', role: 'smas', departamento: 'smas' },
+    { email: 'cintia.brito@pipeway.com', password: 'p7NIkCkg', name: 'Cintia Brito', role: 'smas', departamento: 'smas' },
+    // Usuários TI
+    { email: 'yan.rocha@pipeway.com', password: 'p7NIkCkg', name: 'Yan Rocha', role: 'ti', departamento: 'ti' },
+    { email: 'felipe.moreira@pipeway.com', password: 'p7NIkCkg', name: 'Felipe Moreira', role: 'ti', departamento: 'ti' },
+    { email: 'renato.francis@pipeway.com', password: 'p7NIkCkg', name: 'Renato Francis', role: 'ti', departamento: 'ti' }
+  ];
+
+  function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const departamento = document.getElementById('departamento').value;
+    
+    // Verificar credenciais
+    const user = users.find(u => u.email === email && u.password === password && u.departamento === departamento);
+    
+    if (user) {
+      // Salvar usuário no localStorage
+      localStorage.setItem('comunicacaoUser', JSON.stringify(user));
+      
+      // Redirecionar com base no tipo de usuário
+      if (user.role === 'smas') {
+        window.location.replace('comunicacao_smas.html');
+        return;
+      }
+      window.location.replace('comunicacao.html');
+    } else {
+      const errorMessage = document.getElementById('error-message');
+      errorMessage.style.display = 'block';
+      
+      setTimeout(() => {
+        errorMessage.style.display = 'none';
+      }, 3000);
+    }
+  }
+
+  // Adicionar event listener ao formulário de login
+  document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        login();
+      });
+    }
+  });
+</script>
+  <script src="comunicacao.js"></script>
+</body>
+</html>

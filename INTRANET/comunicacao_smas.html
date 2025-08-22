@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pipeway Engenharia - Comunicação SMAS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="comunicacao_smas.css" />
+</head>
+<body>
+
+  <video autoplay muted loop class="video-bg">
+    <source src="pipeway.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo de fundo.
+  </video>
+  <div class="video-mask"></div>
+
+  <div class="header">
+    <div class="branding">
+      <h1>PIPEWAY</h1>
+      <div class="subtitle">Comunicação SMAS - Intranet Corporativa</div>
+    </div>
+    
+    <div class="counter">
+      <i class="fas fa-users"></i>
+      <span id="visitor-count">1245</span> Visitantes
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Portal de Comunicação SMAS -->
+    <div id="comunicacao-screen" class="comunicacao-container">
+      <div class="user-info">
+        <h2 class="comunicacao-title"><i class="fas fa-shield-alt"></i> Portal de Comunicação SMAS</h2>
+        <p>Bem-vindo, <strong id="user-name"></strong>! <span id="user-role"></span></p>
+        <div style="margin-top: 15px;">
+          <button class="btn-logout" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Sair
+          </button>
+          <button class="btn-logout" onclick="window.location.href='home.html'">
+            <i class="fas fa-arrow-left"></i> Voltar
+          </button>
+        </div>
+      </div>
+
+      <!-- Painel de Administração SMAS -->
+      <div class="admin-panel">
+        <h3><i class="fas fa-plus-circle"></i> Novo Comunicado SMAS</h3>
+        
+        <div id="success-message" class="success-message">
+          <i class="fas fa-check-circle"></i> Comunicado publicado com sucesso!
+        </div>
+        
+        <form id="comunicadoForm">
+          <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="conteudo">Conteúdo</label>
+            <textarea id="conteudo" class="form-control" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="prioridade">Prioridade</label>
+            <select id="prioridade" class="form-control" required>
+              <option value="normal">Normal</option>
+              <option value="importante">Importante</option>
+              <option value="urgente">Urgente</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="imagem">Imagem (opcional)</label>
+            <input type="file" id="imagem" class="form-control" accept="image/*">
+          </div>
+          
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-paper-plane"></i> Publicar Comunicado
+          </button>
+        </form>
+      </div>
+
+      <!-- Gerenciamento do Carrossel -->
+      <div class="admin-panel" style="margin-top: 30px;">
+        <h3><i class="fas fa-images"></i> Gerenciar Carrossel da Página Inicial</h3>
+        
+        <div id="carrossel-success" class="success-message">
+          <i class="fas fa-check-circle"></i> Imagem adicionada ao carrossel com sucesso!
+        </div>
+        
+        <form id="carrosselForm">
+          <div class="form-group">
+            <label for="carrossel-titulo">Título da Imagem</label>
+            <input type="text" id="carrossel-titulo" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="carrossel-imagem">Imagem para o Carrossel</label>
+            <input type="file" id="carrossel-imagem" class="form-control" accept="image/*" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="carrossel-link">Link (opcional)</label>
+            <input type="url" id="carrossel-link" class="form-control" placeholder="https://...">
+          </div>
+          
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-plus"></i> Adicionar ao Carrossel
+          </button>
+        </form>
+        
+        <div style="margin-top: 20px;">
+          <h4>Imagens no Carrossel</h4>
+          <div id="lista-carrossel" class="carrossel-list">
+            <!-- Imagens do carrossel serão listadas aqui -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Mural de Avisos SMAS -->
+      <h3 style="color: #aaffaa; margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-clipboard-list"></i> Mural de Avisos SMAS</h3>
+      
+      <!-- Filtros -->
+      <div class="filtros-container">
+        <select id="filtro-prioridade" onchange="filtrarComunicados()">
+          <option value="todos">Todas as prioridades</option>
+          <option value="normal">Normal</option>
+          <option value="importante">Importante</option>
+          <option value="urgente">Urgente</option>
+        </select>
+      </div>
+      
+      <div id="mural-avisos" class="comunicacao-grid">
+        <!-- Comunicados SMAS serão carregados aqui -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer buttons -->
+  <div class="footer-buttons">
+    <button onclick="window.open('http://10.10.10.5/tel/', '_blank')">
+      <i class="fas fa-phone"></i> Lista Telefônica
+    </button>
+    <button onclick="window.open('suporteTI.html', '_blank')">
+      <i class="fas fa-headset"></i> Suporte TI
+    </button>
+    <button onclick="window.open('http://10.10.10.105/pcp2110/web/login#/pcp_apontamentosdeproducoes?usuario=8498ff13-9f7b-42e1-bff0-9589ae20af14&modofiltro=OR')">
+      <i class="fas fa-user-tie"></i> PCP NASAJON
+    </button>
+    <button onclick="window.open('http://10.10.10.5/pw', '_blank')">
+      <i class="fas fa-key"></i> Minha PW
+    </button>
+    <button onclick="window.open('contato.html', '_blank')">
+      <i class="fas fa-envelope"></i> Fale Conosco
+    </button>
+    <button onclick="window.open('recursos_humanos.html', '_blank')">
+      <i class="fas fa-user-tie"></i> Recursos Humanos
+    </button>
+    <button onclick="window.open('comunicacao.html', '_blank')">
+      <i class="fas fa-bullhorn"></i> Comunicação TI
+    </button>
+  </div>
+<div class="form-group file-upload-container">
+  <label for="imagem" class="file-upload-label">Imagem (opcional)</label>
+  <div class="file-upload-wrapper">
+    <div class="file-upload-button">
+      <i class="fas fa-upload"></i> Selecione uma imagem
+    </div>
+    <input type="file" id="imagem" class="form-control" accept="image/*">
+  </div>
+  <div id="file-name" class="file-name"></div>
+</div>
+
+<!-- Este container será criado dinamicamente pelo JavaScript -->
+  <script src="comunicacao_smas.js"></script>
+</body>
+</html>
