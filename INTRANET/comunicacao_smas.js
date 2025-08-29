@@ -51,7 +51,29 @@ function logout() {
   window.location.replace('comunicacao.html');
 }
 
-// ... restante do código permanece igual ...
+function excluirComunicado(id) {
+  if (confirm('Tem certeza que deseja excluir este comunicado?')) {
+    let comunicados = JSON.parse(localStorage.getItem('comunicacoes')) || [];
+    
+    // Filtrar o comunicado a ser excluído
+    comunicados = comunicados.filter(comunicado => comunicado.id !== id);
+    
+    // Salvar no localStorage
+    localStorage.setItem('comunicacoes', JSON.stringify(comunicados));
+    
+    // Atualizar timestamp para sincronização
+    localStorage.setItem('ultimo_comunicado_timestamp', Date.now().toString());
+    
+    // Disparar evento personalizado
+    const event = new CustomEvent('comunicadoExcluido', { 
+      detail: { id: id, timestamp: Date.now() } 
+    });
+    window.dispatchEvent(event);
+    
+    // Recarregar a lista
+    carregarComunicados();
+  }
+}
 
 // Publicar novo comunicado SMAS
 function handleComunicadoSubmit(e) {
@@ -123,27 +145,44 @@ function salvarComunicado(comunicado) {
 function carregarComunicados() {
   const muralAvisos = document.getElementById('mural-avisos');
   const comunicados = JSON.parse(localStorage.getItem('comunicacoes')) || [];
+  const user = JSON.parse(localStorage.getItem('comunicacaoUser'));
   muralAvisos.innerHTML = '';
+  
   if (comunicados.length === 0) {
     muralAvisos.innerHTML = `<div class="comunicacao-card"><p>Nenhum comunicado SMAS publicado ainda.</p></div>`;
     return;
   }
+  
   const filtroPrioridade = document.getElementById('filtro-prioridade').value;
   const comunicadosSMAS = comunicados.filter(comunicado => 
     comunicado.departamento === 'smas' &&
     (filtroPrioridade === 'todos' || comunicado.prioridade === filtroPrioridade)
   );
+  
   if (comunicadosSMAS.length === 0) {
     muralAvisos.innerHTML = `<div class="comunicacao-card"><p>Nenhum comunicado SMAS encontrado com os filtros selecionados.</p></div>`;
     return;
   }
+  
   comunicadosSMAS.forEach(comunicado => {
     const card = document.createElement('div');
     card.className = `comunicacao-card ${comunicado.prioridade}`;
+    
     let imagemHTML = '';
     if (comunicado.imagem) {
       imagemHTML = `<img src="${comunicado.imagem}" alt="Imagem do comunicado" style="max-width: 100%; border-radius: 5px; margin-bottom: 10px;">`;
     }
+    
+    let botoesAdmin = '';
+    if (user && user.role === 'smas') {
+      botoesAdmin = `
+        <div class="comunicacao-actions">
+          <button class="delete-btn" onclick="excluirComunicado(${comunicado.id})" title="Excluir comunicado">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>`;
+    }
+    
     card.innerHTML = `
       <h3>${comunicado.titulo}</h3>
       ${imagemHTML}
@@ -151,7 +190,9 @@ function carregarComunicados() {
       <div class="comunicacao-meta">
         <span>Por: ${comunicado.autor}</span>
         <span>${comunicado.data}</span>
-      </div>`;
+      </div>
+      ${botoesAdmin}`;
+      
     muralAvisos.appendChild(card);
   });
 }
@@ -176,6 +217,7 @@ function handleCarrosselSubmit(e) {
   reader.readAsDataURL(imagemInput.files[0]);
 }
 
+// Modificar a função adicionarAoCarrossel para incluir timestamp
 function adicionarAoCarrossel(titulo, imagemData, link) {
   let carrossel = JSON.parse(localStorage.getItem('carrosselSMAS')) || [];
   const novaImagem = {
@@ -188,7 +230,18 @@ function adicionarAoCarrossel(titulo, imagemData, link) {
   carrossel.unshift(novaImagem);
   if (carrossel.length > 10) { carrossel = carrossel.slice(0, 10); }
   localStorage.setItem('carrosselSMAS', JSON.stringify(carrossel));
+  
+  // Adicionar timestamp para sincronização
+  localStorage.setItem('ultimo_carrossel_timestamp', Date.now().toString());
+  
   carregarCarrossel();
+  
+  // Disparar evento personalizado para outras abas
+  const event = new CustomEvent('carrosselAtualizado', { 
+    detail: { timestamp: Date.now() } 
+  });
+  window.dispatchEvent(event);
+  
   const successMessage = document.getElementById('carrossel-success');
   successMessage.style.display = 'block';
   document.getElementById('carrosselForm').reset();
@@ -197,6 +250,35 @@ function adicionarAoCarrossel(titulo, imagemData, link) {
   }, 3000);
 }
 
+// Modificar a função removerDoCarrossel para incluir timestamp
+function removerDoCarrossel(id) {
+  let carrossel = JSON.parse(localStorage.getItem('carrosselSMAS')) || [];
+  carrossel = carrossel.filter(item => item.id !== id);
+  localStorage.setItem('carrosselSMAS', JSON.stringify(carrossel));
+  
+  // Adicionar timestamp para sincronização
+  localStorage.setItem('ultimo_carrossel_timestamp', Date.now().toString());
+  
+  // Disparar evento personalizado para outras abas
+  const event = new CustomEvent('carrosselAtualizado', { 
+    detail: { timestamp: Date.now() } 
+  });
+  window.dispatchEvent(event);
+  
+  carregarCarrossel();
+}
+
+// Adicionar listener para eventos de carrossel
+window.addEventListener('carrosselAtualizado', function() {
+  carregarCarrossel();
+});
+
+// Adicionar listener para storage events específicos do carrossel
+window.addEventListener('storage', function(e) {
+  if (e.key === 'carrosselSMAS' || e.key === 'ultimo_carrossel_timestamp') { 
+    carregarCarrossel(); 
+  }
+});
 function carregarCarrossel() {
   const listaCarrossel = document.getElementById('lista-carrossel');
   const carrossel = JSON.parse(localStorage.getItem('carrosselSMAS')) || [];

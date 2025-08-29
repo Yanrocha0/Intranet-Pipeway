@@ -17,7 +17,6 @@
   </video>
   <div class="video-mask"></div>
 
-  <!-- Modal de Agradecimento -->
   <div class="thank-you-modal" id="thankYouModal">
     <div class="modal-content">
       <h2><i class="fas fa-check-circle"></i> Obrigado!</h2>
@@ -32,7 +31,6 @@
       <div class="subtitle">Intranet Corporativa</div>
     </div>
     
-    <!-- Contador moderno -->
     <div class="counter">
       <i class="fas fa-users"></i>
       <span id="visitor-count">1245</span> Visitantes
@@ -44,16 +42,14 @@
       <div class="contact-container">
         <h2 class="contact-title"><i class="fas fa-envelope"></i> Fale Conosco</h2>
         
-        <!-- FORMULÁRIO COM FORMSUBMIT - CORRIGIDO COM method="POST" -->
-  <form id="contactForm" action="https://formsubmit.co/renato.vieira@pipeway.com,felipe.moreira@pipeway.com,yan.rocha@pipeway.com" method="POST">
-          <!-- Configurações do FormSubmit -->
+        <!-- Altere esta linha no seu formulário: -->
+<form id="contactForm" action="https://formsubmit.co/suporte@pipeway.com" method="POST">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_next" value="#">
           <input type="hidden" name="_subject" value="Novo contato da Intranet Pipeway">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_autoresponse" value="Obrigado por entrar em contato com a Pipeway Engenharia! Sua mensagem foi recebida e retornaremos em breve.">
           
-          <!-- Campos do formulário -->
           <div class="form-group">
             <label for="name">Nome Completo</label>
             <input type="text" id="name" name="name" class="form-control" required>
@@ -96,7 +92,6 @@
           
           <button type="submit" class="btn-submit">Enviar Mensagem</button>
         </form>
-        
         <div class="contact-info">
           <h3><i class="fas fa-info-circle"></i> Outras Formas de Contato</h3>
           <p><i class="fas fa-phone"></i> Telefone: (21) 3214-1600</p>
@@ -107,29 +102,15 @@
     </div>
   </div>
 
-   <!-- Footer buttons - MODIFICADOS conforme solicitado -->
    <div class="footer-buttons">
-    <button onclick="window.open('http://10.10.10.5/tel/', '_blank')">
-      <i class="fas fa-phone"></i> Lista Telefônica
-    </button>
-    <button onclick="window.open('suporteTI.html', '_blank')">
-      <i class="fas fa-headset"></i> Suporte TI
-    </button>
-    <button onclick="window.open('http://10.10.10.105/pcp2110/web/login#/pcp_apontamentosdeproducoes?usuario=8498ff13-9f7b-42e1-bff0-9589ae20af14&modofiltro=OR')">
-      <i class="fas fa-user-tie"></i> PCP NASAJON
-    </button>
-    <button onclick="window.open('http://10.10.10.5/pw', '_blank')">
-      <i class="fas fa-key"></i> Minha PW
-    </button>
-    <button onclick="window.open('contato.html', '_blank')">
-      <i class="fas fa-envelope"></i> Fale Conosco
-    </button>
-    <button onclick="window.open('recursos_humanos.html', '_blank')">
-      <i class="fas fa-user-tie"></i> Recursos Humanos
-    </button>
-    <button onclick="window.open('comunicacao.html', '_blank')">
-      <i class="fas fa-bullhorn"></i> Comunicação
-    </button>
+    <button onclick="window.location.href='home.html'"><i class="fas fa-home"></i> Home</button>
+    <button onclick="window.open('http://10.10.10.5/tel/', '_blank')"><i class="fas fa-phone"></i> Lista Telefônica</button>
+    <button onclick="window.open('suporteTI.html', '_blank')"><i class="fas fa-headset"></i> Suporte TI</button>
+    <button onclick="window.open('http://10.10.10.105/pcp2110/web/login#/pcp_apontamentosdeproducoes?usuario=8498ff13-9f7b-42e1-bff0-9589ae20af14&modofiltro=OR')"><i class="fas fa-user-tie"></i> PCP NASAJON</button>
+    <button onclick="window.open('http://10.10.10.5/pw', '_blank')"><i class="fas fa-key"></i> Minha PW</button>
+    <button onclick="window.open('contato.html', '_blank')"><i class="fas fa-envelope"></i> Fale Conosco</button>
+    <button onclick="window.open('recursos_humanos.html', '_blank')"><i class="fas fa-user-tie"></i> Recursos Humanos</button>
+    <button onclick="window.open('comunicacao.html', '_blank')"><i class="fas fa-bullhorn"></i> Comunicação</button>
   </div>
 
   <script>
@@ -148,19 +129,22 @@
       setupForm();
     });
 
-    // Configuração do formulário
+    // === INÍCIO DA MODIFICAÇÃO 2: CÓDIGO JS CORRIGIDO ===
+    // Configuração do formulário para PERMITIR o envio
     function setupForm() {
       const contactForm = document.getElementById('contactForm');
       
-      contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Simular envio bem-sucedido (em produção, isso aconteceria naturalmente com FormSubmit)
-        showThankYouMessage();
+      contactForm.addEventListener('submit', function() {
+        // O código 'e.preventDefault()' foi REMOVIDO daqui.
+        // Agora, o formulário será enviado normalmente para o serviço FormSubmit.
+        // Você pode adicionar um feedback para o usuário aqui, se desejar, como desabilitar o botão de envio.
+        document.querySelector('.btn-submit').textContent = 'Enviando...';
+        document.querySelector('.btn-submit').disabled = true;
       });
     }
+    // === FIM DA MODIFICAÇÃO 2 ===
 
-    // Mostrar mensagem de agradecimento
+    // Mostrar mensagem de agradecimento (não é mais chamada pelo envio)
     function showThankYouMessage() {
       const modal = document.getElementById('thankYouModal');
       modal.style.display = 'flex';

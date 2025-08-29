@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="home.css" />
- 
 </head>
 <body>
 
@@ -20,10 +19,9 @@
 
   <div class="header">
     <div class="header-left">
-      <!-- Ícone de Login no lado esquerdo -->
       <div class="login-icon" onclick="abrirModalLogin()">
         <i class="fas fa-user-circle"></i>
-        <span>Entrar</span>
+        <span id="login-text">Entrar</span>
       </div>
     </div>
     <div class="branding">
@@ -38,73 +36,15 @@
     </div>
   </div>
 
-    <!-- WIDGETS FIXOS NO LADO DIREITO -->
   <div class="widgets-container">
-    <!-- Widget de Temperatura -->
-    <div class="widget">
-      <div class="widget-header">
-        <i class="fas fa-temperature-high"></i>
-        <span>Temperatura</span>
-      </div>
-      <div class="widget-content">
-        <div class="weather-temp" id="widget-weather-temp">25°C</div>
-        <div class="weather-details" id="widget-weather-location">Rio de Janeiro, RJ • Ensolarado</div>
-      </div>
-    </div>
-    
-    <!-- Widget de Cotação do Dólar -->
     <div class="widget">
       <div class="widget-header">
         <i class="fas fa-dollar-sign"></i>
-        <span>Dólar</span>
+        <span>Dólar Comercial (USD)</span>
       </div>
       <div class="widget-content">
-        <div class="dollar-value" id="widget-dollar-value">R$ 5.18</div>
-        <div class="dollar-variation" id="widget-dollar-variation">↘ 0.45%</div>
-      </div>
-    </div>
-    
-    <!-- Widget de Notícias Esportivas -->
-    <div class="widget">
-      <div class="widget-header">
-        <i class="fas fa-futbol"></i>
-        <span>Esportes</span>
-      </div>
-      <div class="widget-content" id="widget-sports-news">
-        <div class="news-item">
-          <span class="news-title">Brasil vence Argentina por 2x1 em amistoso internacional</span>
-          <span class="news-date">Há 2h</span>
-        </div>
-        <div class="news-item">
-          <span class="news-title">Flamengo conquista vitória importante no Maracanã</span>
-          <span class="news-date">Há 4h</span>
-        </div>
-        <div class="news-item">
-          <span class="news-title">Fórmula 1: Hamilton lidera treino livre no GP do Brasil</span>
-          <span class="news-date">Há 6h</span>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Widget de Notícias do Mundo -->
-    <div class="widget">
-      <div class="widget-header">
-        <i class="fas fa-globe-americas"></i>
-        <span>Notícias Mundo</span>
-      </div>
-      <div class="widget-content" id="widget-world-news">
-        <div class="news-item">
-          <span class="news-title">Cúpula do G20 define novas diretrizes econômicas globais</span>
-          <span class="news-date">Há 1h</span>
-        </div>
-        <div class="news-item">
-          <span class="news-title">Europa registra crescimento econômico acima do esperado</span>
-          <span class="news-date">Há 3h</span>
-        </div>
-        <div class="news-item">
-          <span class="news-title">China anuncia investimentos em energia renovável</span>
-          <span class="news-date">Há 8h</span>
-        </div>
+        <div class="dollar-value" id="widget-dollar-value">Carregando...</div>
+        <div class="dollar-variation" id="widget-dollar-variation"></div>
       </div>
     </div>
   </div>
@@ -114,143 +54,239 @@
       <h2>Bem-vindo à Intranet Pipeway</h2>
       <p>Selecione uma das opções no menu abaixo para acessar os recursos da intranet corporativa.</p>
       
-      <!-- Carrossel de Imagens -->
       <div class="carousel-container">
-        <div class="carousel" id="carousel">
-          <div class="carousel-item">
-            <div style="background: linear-gradient(45deg, #0d4f0d, #4caf50); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: white; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px rgba(0,0,0,0.8);">
-              Engenharia Industrial
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div style="background: linear-gradient(45deg, #388e3c, #66bb6a); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: white; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px rgba(0,0,0,0.8);">
-              Tubulações Industriales
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div style="background: linear-gradient(45deg, #2e7d32, #81c784); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: white; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px rgba(0,0,0,0.8);">
-              Projeto de Engenharia
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div style="background: linear-gradient(45deg, #1b5e20, #4caf50); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: white; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 20px rgba(0,0,0,0.8);">
-              Sistemas de Tubulação
-            </div>
-          </div>
-        </div>
-        
-        <button class="carousel-nav prev">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="carousel-nav next">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        
-        <div class="carousel-indicators">
-          <div class="indicator active" data-index="0"></div>
-          <div class="indicator" data-index="1"></div>
-          <div class="indicator" data-index="2"></div>
-          <div class="indicator" data-index="3"></div>
-        </div>
+        <div class="carousel" id="carousel"></div>
+        <button class="carousel-nav prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-nav next"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-indicators" id="carousel-indicators"></div>
       </div>
       
-      <!-- Seção de Comunicados do TI -->
       <div class="comunicados-section">
-        <h2><i class="fas fa-bullhorn"></i> Comunicados do TI</h2>
-        <div id="comunicados-ti" class="comunicados-grid">
-          <!-- Comunicados serão carregados aqui via JavaScript -->
-        </div>
+        <h2><i class="fas fa-bullhorn"></i> Comunicados</h2>
+        <div id="comunicados-gerais" class="comunicados-grid"></div>
       </div>
 
-      <!-- Dashboard agora abaixo dos comunicados -->
-      <div class="dashboard" style="margin-top: 40px;">
+      <div class="dashboard" id="dashboard-google" style="margin-top: 40px; display: none;">
         <div class="card">
           <div class="card-header">
-            <h3><i class="fas fa-tasks"></i> Tarefas Pendentes</h3>
-            <button class="edit-btn" onclick="editarTarefas()"><i class="fas fa-edit"></i></button>
+            <h3><i class="fas fa-tasks"></i> Minhas Tarefas (Google)</h3>
           </div>
-          <p>Você tem <span id="tarefas-count">5</span> tarefas pendentes</p>
+          <p>Você tem <span id="tarefas-count">?</span> tarefas pendentes.</p>
           <ul id="tarefas-list">
-            <li>Relatório trimestral (vence em 3 dias)</li>
-            <li>Aprovação de documento (vence amanhã)</li>
-            <li>Revisão de projeto (em andamento)</li>
+            <li>Faça login para ver suas tarefas.</li>
           </ul>
+        </div>
+        <div class="card">
+            <div class="card-header">
+              <h3><i class="fas fa-calendar-alt"></i> Próximas Reuniões (Google)</h3>
+            </div>
+            <ul id="reunioes-list">
+              <li>Faça login para ver suas reuniões.</li>
+            </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer buttons -->
   <div class="footer-buttons">
-    <button onclick="window.open('http://10.10.10.5/tel/', '_blank')">
-      <i class="fas fa-phone"></i> Lista Telefônica
-    </button>
-    <button onclick="window.open('suporteTI.html', '_blank')">
-      <i class="fas fa-headset"></i> Suporte TI
-    </button>
-    <button onclick="window.open('http://10.10.10.105/pcp2110/web/login#/pcp_apontamentosdeproducoes?usuario=8498ff13-9f7b-42e1-bff0-9589ae20af14&modofiltro=OR')">
-      <i class="fas fa-user-tie"></i> PCP NASAJON
-    </button>
-    <button onclick="window.open('http://10.10.10.5/pw', '_blank')">
-      <i class="fas fa-key"></i> Minha PW
-    </button>
-    <button onclick="window.open('contato.html', '_blank')">
-      <i class="fas fa-envelope"></i> Fale Conosco
-    </button>
-    <button onclick="window.open('recursos_humanos.html', '_blank')">
-      <i class="fas fa-user-tie"></i> Recursos Humanos
-    </button>
-    <button onclick="window.open('comunicacao.html', '_blank')">
-      <i class="fas fa-bullhorn"></i> Comunicação
-    </button>
+    <button onclick="window.location.href='home.html'"><i class="fas fa-home"></i> Home</button>
+    <button onclick="window.open('http://10.10.10.5/tel/', '_blank')"><i class="fas fa-phone"></i> Lista Telefônica</button>
+    <button onclick="window.open('suporteTI.html', '_blank')"><i class="fas fa-headset"></i> Suporte TI</button>
+    <button onclick="window.open('http://10.10.10.105/pcp2110/web/login#/pcp_apontamentosdeproducoes?usuario=8498ff13-9f7b-42e1-bff0-9589ae20af14&modofiltro=OR')"><i class="fas fa-user-tie"></i> PCP NASAJON</button>
+    <button onclick="window.open('http://10.10.10.5/pw', '_blank')"><i class="fas fa-key"></i> Minha PW</button>
+    <button onclick="window.open('contato.html', '_blank')"><i class="fas fa-envelope"></i> Fale Conosco</button>
+    <button onclick="window.open('recursos_humanos.html', '_blank')"><i class="fas fa-user-tie"></i> Recursos Humanos</button>
+    <button onclick="window.open('comunicacao.html', '_blank')"><i class="fas fa-bullhorn"></i> Comunicação</button>
   </div>
 
-  <!-- Modal para edição -->
-  <div id="edit-modal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close" onclick="fecharModal()">&times;</span>
-      <h2 id="modal-title">Editar</h2>
-      <div id="modal-body">
-        <!-- Conteúdo dinâmico será inserido aqui -->
-      </div>
-      <div class="modal-actions">
-        <button onclick="fecharModal()">Cancelar</button>
-        <button onclick="salvarEdicao()" class="btn-primary">Salvar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal de Login -->
   <div id="login-modal" class="modal hidden">
     <div class="modal-content login-modal-content">
       <span class="close" onclick="fecharModalLogin()">&times;</span>
       <h2><i class="fas fa-user-circle"></i> Login Corporativo</h2>
-      
       <div class="login-form">
-        <p class="login-info">Acesse com sua conta corporativa @pipeway.com.br</p>
-        
-        <div class="google-login-btn" onclick="fazerLoginGoogle()">
-          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
-          <span>Entrar com Google</span>
-        </div>
-        
-        <div class="login-separator">
-          <span>OU</span>
-        </div>
-        
-        <div class="email-input-group">
-          <label for="email-input">E-mail corporativo:</label>
-          <input type="email" id="email-input" placeholder="seu.email@pipeway.com.br">
-          <button onclick="validarEmail()">Verificar E-mail</button>
-        </div>
-        
-        <div class="login-footer">
-          <p class="domain-info">Somente e-mails do domínio <strong>@pipeway.com.br</strong> são permitidos</p>
-          <p class="support-link">Problemas para acessar? <a href="suporteTI.html" target="_blank">Contate o Suporte TI</a></p>
-        </div>
+        <div class="google-login-btn" onclick="fazerLoginGoogle()"><img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo"><span>Entrar com Google</span></div>
       </div>
     </div>
   </div>
+
+  <script src="home.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
   
+
+
+  
+</body>
+</html>
+
+  <script>
+    // Função para carregar comunicados de TI e SMAS
+    function carregarComunicados() {
+      const comunicadosContainer = document.getElementById('comunicados-gerais');
+      
+      // Obter comunicados do localStorage
+      const comunicadosSalvos = localStorage.getItem('comunicacoes');
+      let comunicados = [];
+      
+      if (comunicadosSalvos) {
+        try {
+          comunicados = JSON.parse(comunicadosSalvos);
+        } catch (e) {
+          console.error('Erro ao parsear comunicados:', e);
+        }
+      }
+      
+      // Filtrar apenas comunicados de TI e SMAS
+      const comunicadosFiltrados = comunicados.filter(com => 
+        com.departamento === 'ti' || com.departamento === 'smas'
+      );
+      
+      // Ordenar por data (mais recentes primeiro)
+      comunicadosFiltrados.sort((a, b) => {
+        const timestampA = a.timestamp || new Date(a.data).getTime() || 0;
+        const timestampB = b.timestamp || new Date(b.data).getTime() || 0;
+        return timestampB - timestampA;
+      });
+      
+      // Limpar o container
+      comunicadosContainer.innerHTML = '';
+      
+      // Verificar se há comunicados
+      if (comunicadosFiltrados.length === 0) {
+        comunicadosContainer.innerHTML = `
+          <div class="sem-comunicados">
+            <p>Não há comunicados de TI ou SMAS no momento.</p>
+            <a href="comunicacao.html" target="_blank">Acesse o portal de comunicação</a>
+          </div>
+        `;
+        return;
+      }
+      
+      // Exibir os comunicados (limitar a 6 mais recentes)
+      const comunicadosExibir = comunicadosFiltrados.slice(0, 6);
+      
+      comunicadosExibir.forEach(comunicado => {
+        const comunicadoCard = document.createElement('div');
+        comunicadoCard.className = `comunicado-card ${comunicado.prioridade || 'normal'}`;
+        
+        // Formatar a data
+        let dataFormatada = new Date().toLocaleDateString('pt-BR');
+        if (comunicado.timestamp) {
+          dataFormatada = new Date(comunicado.timestamp).toLocaleString('pt-BR', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          });
+        } else if (comunicado.data) {
+          dataFormatada = comunicado.data;
+        }
+        
+        // Definir cor e rótulo do departamento
+        const deptColor = comunicado.departamento === 'ti' ? '#4caf50' : '#2196f3';
+        const deptLabel = comunicado.departamento === 'ti' ? 'TI' : 'SMAS';
+        
+        // Badge de prioridade
+        let priorityBadge = '';
+        if (comunicado.prioridade === 'urgente') {
+          priorityBadge = '<span class="priority-badge urgent">URGENTE</span>';
+        } else if (comunicado.prioridade === 'importante') {
+          priorityBadge = '<span class="priority-badge important">IMPORTANTE</span>';
+        }
+        
+        // HTML da imagem, se existir
+        let imagemHTML = '';
+        if (comunicado.imagem) {
+          imagemHTML = `<img src="${comunicado.imagem}" alt="Imagem do comunicado" class="comunicado-image">`;
+        }
+        
+        comunicadoCard.innerHTML = `
+          <div class="comunicado-header">
+            <h3>${comunicado.titulo || 'Comunicado sem título'}</h3>
+            <div class="comunicado-badges">
+              <span class="dept-badge" style="background: ${deptColor};">${deptLabel}</span>
+              ${priorityBadge}
+            </div>
+          </div>
+          ${imagemHTML}
+          <div class="comunicado-content">
+            <p>${comunicado.conteudo || 'Sem conteúdo'}</p>
+          </div>
+          <div class="comunicado-footer">
+            <span class="comunicado-author">Por: ${comunicado.autor || 'Autor desconhecido'}</span>
+            <span class="comunicado-date">${dataFormatada}</span>
+          </div>
+        `;
+        
+        comunicadosContainer.appendChild(comunicadoCard);
+      });
+    }
+
+    // Chamar a função quando a página carregar
+    document.addEventListener('DOMContentLoaded', function() {
+      carregarComunicados();
+      
+      // Atualizar a cada 30 segundos para pegar novos comunicados
+      setInterval(carregarComunicados, 30000);
+      
+      // Também atualizar quando a página ganhar foco
+      window.addEventListener('focus', carregarComunicados);
+      
+      // Escutar eventos de storage para atualizar em tempo real
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'comunicacoes') {
+          carregarComunicados();
+        }
+      });
+    });
+
+    // Outras funções existentes (mantidas iguais)
+    function abrirModalLogin() {
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    function fecharModalLogin() {
+      document.getElementById('login-modal').classList.add('hidden');
+    }
+
+    function validarEmail() {
+      const emailInput = document.getElementById('email-input');
+      const email = emailInput.value.trim();
+      
+      if (!email) {
+        alert('Por favor, informe seu e-mail corporativo');
+        return;
+      }
+      
+      if (!email.endsWith('@pipeway.com.br')) {
+        alert('Somente e-mails do domínio @pipeway.com.br são permitidos');
+        return;
+      }
+      
+      alert('E-mail de verificação enviado! Por favor, verifique sua caixa de entrada.');
+    }
+
+    function editarTarefas() {
+      // Implementação existente
+    }
+
+    function fecharModal() {
+      // Implementação existente
+    }
+
+    function salvarEdicao() {
+      // Implementação existente
+    }
+
+    // Inicialização do contador de visitantes
+    document.addEventListener('DOMContentLoaded', function() {
+      let count = localStorage.getItem('visitorCount');
+      if (count === null) {
+        count = 1245;
+      } else {
+        count = parseInt(count) + 1;
+      }
+      localStorage.setItem('visitorCount', count);
+      document.getElementById('visitor-count').textContent = count;
+    });
+  </script>
 </body>
 </html>
